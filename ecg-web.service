@@ -8,6 +8,7 @@ User=ecg-web
 Group=ecg-web
 WorkingDirectory=/opt/ecg-web
 EnvironmentFile=/opt/ecg-web/.env
+Environment=MPLCONFIGDIR=/var/cache/ecg-web/matplotlib
 ExecStart=/opt/ecg-web/.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8001
 Restart=on-failure
 RestartSec=5
@@ -16,7 +17,7 @@ RestartSec=5
 PrivateTmp=true
 NoNewPrivileges=true
 ProtectSystem=strict
-ReadWritePaths=/opt/ecg-web
+ReadWritePaths=/opt/ecg-web /var/cache/ecg-web
 
 [Install]
 WantedBy=multi-user.target
