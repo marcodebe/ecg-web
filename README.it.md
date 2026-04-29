@@ -227,6 +227,39 @@ ecg-web/
 └── requirements.txt
 ```
 
+## Esecuzione come servizio systemd
+
+Il file `ecg-web.service` è pronto all'uso.
+
+**1. Copia il progetto** (adatta il percorso se necessario):
+
+```bash
+sudo cp -r . /opt/ecg-web
+sudo chown -R debe:debe /opt/ecg-web
+```
+
+**2. Installa e avvia il servizio:**
+
+```bash
+sudo cp /opt/ecg-web/ecg-web.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable --now ecg-web
+```
+
+**3. Verifica lo stato:**
+
+```bash
+systemctl status ecg-web
+journalctl -u ecg-web -f
+```
+
+Il servizio è in ascolto su `127.0.0.1:8001`. Per esporlo all'esterno, configura
+un reverse proxy (nginx, Caddy, …) davanti al servizio.
+
+Se il percorso di deploy o l'utente differiscono dai valori predefiniti nel file
+(`/opt/ecg-web`, utente `debe`), modifica `ecg-web.service` prima di copiarlo in
+`/etc/systemd/system/`.
+
 ## Aggiornare il submodule
 
 ```bash

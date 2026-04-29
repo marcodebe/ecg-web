@@ -226,6 +226,39 @@ ecg-web/
 └── requirements.txt
 ```
 
+## Running as a systemd service
+
+A ready-to-use unit file is provided at `ecg-web.service`.
+
+**1. Deploy the project** (adjust the path if needed):
+
+```bash
+sudo cp -r . /opt/ecg-web
+sudo chown -R debe:debe /opt/ecg-web
+```
+
+**2. Install and enable the unit:**
+
+```bash
+sudo cp /opt/ecg-web/ecg-web.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable --now ecg-web
+```
+
+**3. Check status:**
+
+```bash
+systemctl status ecg-web
+journalctl -u ecg-web -f
+```
+
+The unit binds to `127.0.0.1:8001`. To expose it externally, put a reverse proxy
+(nginx, Caddy, …) in front of it.
+
+If the deployment path or the user differ from the defaults in the unit file
+(`/opt/ecg-web`, user `debe`), edit `ecg-web.service` before copying it to
+`/etc/systemd/system/`.
+
 ## Updating the submodule
 
 ```bash

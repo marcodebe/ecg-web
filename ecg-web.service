@@ -1,0 +1,22 @@
+[Unit]
+Description=ECG DICOM Converter API
+After=network.target
+
+[Service]
+Type=exec
+User=debe
+Group=debe
+WorkingDirectory=/opt/ecg-web
+EnvironmentFile=/opt/ecg-web/.env
+ExecStart=/opt/ecg-web/.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8001
+Restart=on-failure
+RestartSec=5
+
+# Hardening
+PrivateTmp=true
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/opt/ecg-web
+
+[Install]
+WantedBy=multi-user.target
