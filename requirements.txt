@@ -7,3 +7,4 @@ matplotlib
 requests
 slowapi>=0.1.9
 pydantic-settings>=2.0.0
+aiofiles>=23.0.0
