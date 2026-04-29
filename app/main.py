@@ -9,6 +9,7 @@ from slowapi.errors import RateLimitExceeded
 from app.limiter import limiter
 from app.routes.ecg import router as ecg_router
 from app.routes.formats import router as formats_router
+from app.routes.ui import router as ui_router
 
 app = FastAPI(
     title="ECG DICOM Converter",
@@ -21,6 +22,7 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 app.include_router(ecg_router)
 app.include_router(formats_router)
+app.include_router(ui_router)
 
 _static = Path(__file__).parent / "static"
 app.mount("/static", StaticFiles(directory=_static), name="static")

@@ -34,7 +34,6 @@
 
     label { font-size: 0.85rem; font-weight: 500; color: #555; display: block; margin-bottom: 0.3rem; }
 
-    input[type="text"],
     input[type="number"],
     input[type="file"],
     select {
@@ -108,11 +107,6 @@
 <h1>ECG DICOM Converter</h1>
 
 <form id="ecg-form">
-  <div>
-    <label for="api-key">API Key</label>
-    <input type="text" id="api-key" placeholder="leave empty if auth is disabled">
-  </div>
-
   <div>
     <label for="file">DICOM file</label>
     <input type="file" id="file" accept=".dcm" required>
@@ -200,12 +194,8 @@
     body.append('interpretation', document.getElementById('interpretation').checked);
     body.append('mm_mv', document.getElementById('mm-mv').value);
 
-    const headers = {};
-    const apiKey = document.getElementById('api-key').value.trim();
-    if (apiKey) headers['X-API-Key'] = apiKey;
-
     try {
-      const res = await fetch('/api/ecg/convert', { method: 'POST', headers, body });
+      const res = await fetch('/ui/convert', { method: 'POST', body });
 
       if (!res.ok) {
         const data = await res.json().catch(() => ({ detail: res.statusText }));
