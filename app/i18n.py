@@ -6,14 +6,14 @@ MESSAGES: dict[str, dict[str, str]] = {
         "invalid_layout": "Invalid layout. Accepted values: {values}",
         "invalid_paper": "Invalid paper format. Accepted values: {values}",
         "invalid_format": "Invalid output format. Accepted values: {values}",
-        "conversion_error": "Error converting DICOM file: {error}",
+        "conversion_error": "DICOM conversion failed. Check server logs for details.",
     },
     "it": {
         "auth_error": "API key mancante o non valida.",
         "invalid_layout": "Layout non valido. Valori accettati: {values}",
         "invalid_paper": "Formato carta non valido. Valori accettati: {values}",
         "invalid_format": "Formato output non valido. Valori accettati: {values}",
-        "conversion_error": "Errore nella conversione del file DICOM: {error}",
+        "conversion_error": "Conversione DICOM fallita. Controllare i log del server.",
     },
 }
 

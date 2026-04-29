@@ -1,7 +1,10 @@
-import sys
 import io
+import logging
+import sys
 from pathlib import Path
 from typing import Annotated, Optional
+
+logger = logging.getLogger(__name__)
 
 from fastapi import APIRouter, Depends, File, Form, Header, HTTPException, Request, UploadFile
 from fastapi.responses import Response
@@ -57,7 +60,8 @@ def _render(
             ecg.draw(layoutid=layout, mm_mv=mm_mv, minor_axis=minor_grid, interpretation=interpretation)
             data = ecg.save(outformat=format)
     except Exception as e:
-        raise HTTPException(status_code=400, detail=t("conversion_error", lang, error=e))
+        logger.exception("DICOM conversion failed")
+        raise HTTPException(status_code=400, detail=t("conversion_error", lang))
 
     return data
 

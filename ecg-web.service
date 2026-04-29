@@ -4,8 +4,8 @@ After=network.target
 
 [Service]
 Type=exec
-User=debe
-Group=debe
+User=ecg-web
+Group=ecg-web
 WorkingDirectory=/opt/ecg-web
 EnvironmentFile=/opt/ecg-web/.env
 ExecStart=/opt/ecg-web/.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8001

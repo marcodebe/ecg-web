@@ -256,27 +256,34 @@ journalctl -u ecg-web -f
 Il servizio è in ascolto su `127.0.0.1:8001`. Per esporlo all'esterno, configura
 un reverse proxy (nginx, Caddy, …) davanti al servizio.
 
-Se il percorso di deploy o l'utente differiscono dai valori predefiniti nel file
-(`/opt/ecg-web`, utente `debe`), modifica `ecg-web.service` prima di copiarlo in
-`/etc/systemd/system/`.
+Il servizio gira come utente `ecg-web`. Crearlo prima di avviare il servizio:
+
+```bash
+sudo useradd --system --no-create-home ecg-web
+```
+
+Se il percorso di deploy differisce da `/opt/ecg-web`, modifica `ecg-web.service`
+prima di copiarlo in `/etc/systemd/system/`.
 
 ## Configurazione nginx
 
-Il file `ecg.galliera.it.conf` contiene un server block nginx pronto all'uso.
+Il file `ecg-web.nginx.conf` contiene un server block nginx pronto all'uso.
 Gestisce il redirect HTTP → HTTPS, SSL via Let's Encrypt e il proxy verso
 uvicorn su `127.0.0.1:8001`.
+
+Sostituire `ecg.example.com` con il proprio dominio prima di installare.
 
 **1. Ottieni un certificato SSL** (se non già presente):
 
 ```bash
-certbot --nginx -d ecg.galliera.it
+certbot --nginx -d tuo.dominio.it
 ```
 
 **2. Installa la configurazione:**
 
 ```bash
-sudo cp ecg.galliera.it.conf /etc/nginx/sites-available/ecg.galliera.it
-sudo ln -s /etc/nginx/sites-available/ecg.galliera.it /etc/nginx/sites-enabled/
+sudo cp ecg-web.nginx.conf /etc/nginx/sites-available/ecg-web
+sudo ln -s /etc/nginx/sites-available/ecg-web /etc/nginx/sites-enabled/
 sudo nginx -t && sudo systemctl reload nginx
 ```
 
