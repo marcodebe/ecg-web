@@ -1,4 +1,5 @@
 from functools import lru_cache
+from pathlib import Path
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -8,6 +9,7 @@ class Settings(BaseSettings):
     # Stringa CSV: "key1,key2,key3" — gestita come property
     api_keys: str = Field(default="")
     rate_limit: str = "60/minute"
+    sample_files_dir: Path = Path("sample_files")
 
     model_config = SettingsConfigDict(
         env_file=".env",
