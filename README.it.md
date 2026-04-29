@@ -58,6 +58,8 @@ uvicorn app.main:app --port 8001 --reload
 
 La documentazione interattiva è disponibile su <http://localhost:8001/docs>.
 
+Un client web di esempio è disponibile su <http://localhost:8001/>.
+
 ## Autenticazione
 
 Quando `AUTH_ENABLED=true`, ogni richiesta agli endpoint `/api/ecg/*` deve includere
@@ -68,6 +70,15 @@ X-API-Key: <chiave>
 ```
 
 Le richieste senza chiave o con chiave non valida ricevono `401 Unauthorized`.
+
+## Client web
+
+All'indirizzo `GET /` è disponibile un client web minimale a pagina singola. Permette
+di caricare un file DICOM, configurare tutte le opzioni di conversione e visualizzare
+il risultato direttamente nel browser. Per i formati immagine (PNG, JPG, SVG) il
+risultato è mostrato inline; per tutti i formati è disponibile un link di download.
+
+Non richiede installazione separata: è incluso nel server API.
 
 ## Endpoint
 
@@ -205,9 +216,11 @@ ecg-web/
 │   ├── i18n.py          # Traduzioni e rilevamento lingua da Accept-Language
 │   ├── limiter.py       # Istanza globale slowapi
 │   ├── main.py          # Applicazione FastAPI
-│   └── routes/
-│       ├── ecg.py       # Endpoint /convert e /convert-wado
-│       └── formats.py   # Endpoint /formats
+│   ├── routes/
+│   │   ├── ecg.py       # Endpoint /convert e /convert-wado
+│   │   └── formats.py   # Endpoint /formats
+│   └── static/
+│       └── index.html   # Client web di esempio (servito su /)
 ├── dicom-ecg-plot/      # Git submodule
 ├── .env                 # Configurazione locale (non versionato)
 ├── .env.example         # Template di configurazione

@@ -58,6 +58,8 @@ uvicorn app.main:app --port 8001 --reload
 
 Interactive API documentation is available at <http://localhost:8001/docs>.
 
+A browser-based demo client is served at <http://localhost:8001/>.
+
 ## Authentication
 
 When `AUTH_ENABLED=true`, every request to `/api/ecg/*` endpoints must include the header:
@@ -67,6 +69,15 @@ X-API-Key: <key>
 ```
 
 Requests without a key or with an invalid key receive `401 Unauthorized`.
+
+## Web client
+
+A minimal single-page client is served at `GET /`. It provides a form to upload a
+DICOM file, configure all conversion options, and view the result directly in the
+browser. For image formats (PNG, JPG, SVG) the output is displayed inline; for all
+formats a download link is provided.
+
+No installation or separate server is needed — it is bundled with the API.
 
 ## Endpoints
 
@@ -204,9 +215,11 @@ ecg-web/
 │   ├── i18n.py          # Translations and Accept-Language detection
 │   ├── limiter.py       # Global slowapi instance
 │   ├── main.py          # FastAPI application
-│   └── routes/
-│       ├── ecg.py       # /convert and /convert-wado endpoints
-│       └── formats.py   # /formats endpoint
+│   ├── routes/
+│   │   ├── ecg.py       # /convert and /convert-wado endpoints
+│   │   └── formats.py   # /formats endpoint
+│   └── static/
+│       └── index.html   # Browser demo client (served at /)
 ├── dicom-ecg-plot/      # Git submodule
 ├── .env                 # Local configuration (not versioned)
 ├── .env.example         # Configuration template
