@@ -260,6 +260,26 @@ Se il percorso di deploy o l'utente differiscono dai valori predefiniti nel file
 (`/opt/ecg-web`, utente `debe`), modifica `ecg-web.service` prima di copiarlo in
 `/etc/systemd/system/`.
 
+## Configurazione nginx
+
+Il file `ecg.galliera.it.conf` contiene un server block nginx pronto all'uso.
+Gestisce il redirect HTTP → HTTPS, SSL via Let's Encrypt e il proxy verso
+uvicorn su `127.0.0.1:8001`.
+
+**1. Ottieni un certificato SSL** (se non già presente):
+
+```bash
+certbot --nginx -d ecg.galliera.it
+```
+
+**2. Installa la configurazione:**
+
+```bash
+sudo cp ecg.galliera.it.conf /etc/nginx/sites-available/ecg.galliera.it
+sudo ln -s /etc/nginx/sites-available/ecg.galliera.it /etc/nginx/sites-enabled/
+sudo nginx -t && sudo systemctl reload nginx
+```
+
 ## Aggiornare il submodule
 
 ```bash

@@ -259,6 +259,26 @@ If the deployment path or the user differ from the defaults in the unit file
 (`/opt/ecg-web`, user `debe`), edit `ecg-web.service` before copying it to
 `/etc/systemd/system/`.
 
+## nginx configuration
+
+A ready-to-use nginx server block is provided at `ecg.galliera.it.conf`.
+It handles HTTP → HTTPS redirect, SSL via Let's Encrypt, and proxies all
+traffic to uvicorn on `127.0.0.1:8001`.
+
+**1. Obtain an SSL certificate** (if not already done):
+
+```bash
+certbot --nginx -d ecg.galliera.it
+```
+
+**2. Install the configuration:**
+
+```bash
+sudo cp ecg.galliera.it.conf /etc/nginx/sites-available/ecg.galliera.it
+sudo ln -s /etc/nginx/sites-available/ecg.galliera.it /etc/nginx/sites-enabled/
+sudo nginx -t && sudo systemctl reload nginx
+```
+
 ## Updating the submodule
 
 ```bash
