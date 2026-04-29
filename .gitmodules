@@ -1,0 +1,3 @@
+[submodule "dicom-ecg-plot"]
+	path = dicom-ecg-plot
+	url = https://github.com/marcodebe/dicom-ecg-plot.git
