@@ -9,7 +9,7 @@ Group=ecg-web
 WorkingDirectory=/opt/ecg-web
 EnvironmentFile=/opt/ecg-web/.env
 Environment=MPLCONFIGDIR=/var/cache/ecg-web/matplotlib
-ExecStart=/opt/ecg-web/.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8001
+ExecStart=/opt/ecg-web/.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8001 --proxy-headers
 Restart=on-failure
 RestartSec=5
 
